@@ -1,0 +1,23 @@
+{
+    "name": "danibrutal/kairosdb-client",
+    "description": "A client library for KairosDB written in PHP",
+    "authors": [
+        {
+            "name": "Daniel Martínez",
+            "email": "danimartcas@hotmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KairosDB\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KairosDB\\Test\\": "tests"
+        }
+    }
+}
