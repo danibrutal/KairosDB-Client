@@ -7,6 +7,11 @@
             "email": "danimartcas@hotmail.com"
         }
     ],
+    "homepage": "https://github.com/danibrutal/KairosDB-Client",
+    "keywords": [
+        "kairodb", "time series", "database", "client"
+    ],
+    "license": "MIT",
     "require": {
         "guzzlehttp/guzzle": "^6.0"
     },
