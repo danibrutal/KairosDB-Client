@@ -1,4 +1,4 @@
-# KairosDB Client
+# KairosDB Client [![Build Status](https://travis-ci.org/danibrutal/KairosDB-Client.png?branch=master)](https://travis-ci.org/danibrutal/KairosDB-Client)
 
 ## Description
 

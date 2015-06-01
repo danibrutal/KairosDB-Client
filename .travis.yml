@@ -1,0 +1,5 @@
+language: php
+script: phpunit
+
+php:
+    - 5.5
