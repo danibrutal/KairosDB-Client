@@ -14,6 +14,39 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->queryBuilder = new QueryBuilder();
     }
 
+
+    public function testAddMetricGroupingByValue()
+    {
+        $metricName = "network_in";
+        $range_size = 1000;
+        $query = $this->queryBuilder
+            ->addMetric($metricName)
+            ->groupByValue($range_size)
+            ->build();
+
+        $metric = array_pop($query['metrics']);
+
+        $this->assertArrayHasKey('group_by', $metric);
+        $this->assertEquals('value', $metric['group_by']['name']);
+        $this->assertEquals($range_size, $metric['group_by']['range_size']);
+    }
+
+    public function testAddMetricGroupingByTags()
+    {
+        $metricName = "network_in";
+        $tags = ["host" => 'precise64'];
+        $query = $this->queryBuilder
+            ->addMetric($metricName)
+            ->groupByTags($tags)
+            ->build();
+
+        $metric = array_pop($query['metrics']);
+
+        $this->assertArrayHasKey('group_by', $metric);
+        $this->assertEquals('tag', $metric['group_by']['name']);
+        $this->assertEquals($tags, $metric['group_by']['tags']);
+    }
+
     public function testAddSeveralMetric()
     {
         $metricName = "network_in";

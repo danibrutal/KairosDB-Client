@@ -30,6 +30,34 @@ class QueryBuilder
     }
 
     /**
+     * @param array $tags
+     * @return $this
+     */
+    public function groupByValue($value)
+    {
+        $this->currentMetric['group_by'] = [
+            'name' => 'value',
+            'range_size' => $value,
+        ];
+
+        return $this;
+    }
+
+    /**
+     * @param array $tags
+     * @return $this
+     */
+    public function groupByTags(array $tags)
+    {
+        $this->currentMetric['group_by'] = [
+            'name' => 'tag',
+            'tags' => $tags,
+        ];
+
+        return $this;
+    }
+
+    /**
      * @param int $limit
      * @return $this
      */
