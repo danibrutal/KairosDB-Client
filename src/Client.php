@@ -99,26 +99,19 @@ class Client
         return $this->post('datapoints/query/tags', $data);
     }
 
-    public function deleteDataPoints($query = "")
+    /**
+     * @param array $query
+     * @return string
+     */
+    public function deleteDataPoints(array $query)
     {
-        $data = [
-            "metrics" => [
-                [
-                    "tags" => [
-                        "host" => "precise64"
-                    ],
-                    "name" => "kairosdb.protocol.http_request_count"
-                ]
-            ],
-            "cache_time" => 0,
-            "start_relative" => [
-                "value" => "1",
-                "unit" => "hours"
-            ]
-        ];
-        return $this->post('datapoints/delete', $data);
+        return $this->post('datapoints/delete', $query);
     }
 
+    /**
+     * @param $metricName
+     * @return bool
+     */
     public function deleteMetric($metricName)
     {
         return $this->delete(sprintf('metric/%s', $metricName));

@@ -30,12 +30,35 @@ class QueryBuilder
     }
 
     /**
+     * todo: with magic calls
+     * @param array $sampling
+     * @return $this
+     */
+    public function max(array $sampling = [])
+    {
+        $aggregator  = [
+            'name' => 'max'
+        ];
+
+        if ($sampling) {
+            $aggregator['sampling'] = [
+                'value' => $sampling['value'],
+                'unit'  => $sampling['unit']
+            ];
+        }
+
+        $this->currentMetric['aggregators'][] = $aggregator;
+
+        return $this;
+    }
+
+    /**
      * @param array $tags
      * @return $this
      */
     public function groupByValue($value)
     {
-        $this->currentMetric['group_by'] = [
+        $this->currentMetric['group_by'][] = [
             'name' => 'value',
             'range_size' => $value,
         ];
@@ -49,7 +72,7 @@ class QueryBuilder
      */
     public function groupByTags(array $tags)
     {
-        $this->currentMetric['group_by'] = [
+        $this->currentMetric['group_by'][] = [
             'name' => 'tag',
             'tags' => $tags,
         ];

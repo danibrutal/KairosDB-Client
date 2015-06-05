@@ -14,6 +14,38 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $this->queryBuilder = new QueryBuilder();
     }
 
+/*"aggregators": [
+                    {
+                        "name": "max",
+                        "align_sampling": true,
+                        "sampling": {
+                        "value": "2",
+                            "unit": "days",
+                            "time_zone": ""
+                        }
+                    }
+                ]
+            }
+        ],
+
+    }*/
+    public function testAggregatorMax()
+    {
+
+        $metricName = "network_in";
+        $query = $this->queryBuilder
+            ->addMetric($metricName)
+            ->max(['unit' => 'days', 'value' => 1])
+            ->build();
+
+        $metric = array_pop($query['metrics']);
+
+        $this->assertArrayHasKey('aggregators', $metric);
+        $this->assertCount(1, $metric['aggregators']);
+        $this->assertArrayHasKey('name', $metric['aggregators'][0]);
+        $this->assertArrayHasKey('sampling', $metric['aggregators'][0]);
+    }
+
 
     public function testAddMetricGroupingByValue()
     {
@@ -27,14 +59,14 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $metric = array_pop($query['metrics']);
 
         $this->assertArrayHasKey('group_by', $metric);
-        $this->assertEquals('value', $metric['group_by']['name']);
-        $this->assertEquals($range_size, $metric['group_by']['range_size']);
+        $this->assertEquals('value', $metric['group_by'][0]['name']);
+        $this->assertEquals($range_size, $metric['group_by'][0]['range_size']);
     }
 
     public function testAddMetricGroupingByTags()
     {
         $metricName = "network_in";
-        $tags = ["host" => 'precise64'];
+        $tags = ["host"];
         $query = $this->queryBuilder
             ->addMetric($metricName)
             ->groupByTags($tags)
@@ -43,8 +75,8 @@ class QueryBuilderTest extends \PHPUnit_Framework_TestCase
         $metric = array_pop($query['metrics']);
 
         $this->assertArrayHasKey('group_by', $metric);
-        $this->assertEquals('tag', $metric['group_by']['name']);
-        $this->assertEquals($tags, $metric['group_by']['tags']);
+        $this->assertEquals('tag', $metric['group_by'][0]['name']);
+        $this->assertEquals($tags, $metric['group_by'][0]['tags']);
     }
 
     public function testAddSeveralMetric()
