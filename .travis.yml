@@ -3,3 +3,7 @@ script: phpunit
 
 php:
     - 5.5
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source --dev
